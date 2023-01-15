@@ -10,7 +10,7 @@
 
 </head>
 <body class="light">
-    <div class='markdown-body'><h1>编程环境配置</h1><p>考虑到作为文档的完整性,这里详细讲解一下python和C的graphviz环境搭建</p><h2>Python</h2><p>python已有graphviz的python接口库及<a href="https://graphviz.readthedocs.io/en/stable/manual.html" target="_blank">文档</a></p><pre><code class="language-bash">pip install graphviz</code></pre><h2>C</h2><p>新建文件test.c</p><pre><code class="language-c">#include &lt;graphviz/gvc.h&gt;
+    <div class='markdown-body'><h1>编程环境配置</h1><p>考虑到作为文档的完整性,这里详细讲解一下python和C的graphviz环境搭建</p><h2>DOT</h2><p>你可以在bin/目录下(/usr/bin/dot)直接运行dot程序,如果你使用的编程语言暂时不支持调用graphviz库,那么可以先输出一个.dot文件,然后再使用类似os.system或者execve开启一个操作系统进程去调用dot解析相关文件,得到最后的结果</p><h2>Python</h2><p>python已有graphviz的python接口库及<a href="https://graphviz.readthedocs.io/en/stable/manual.html" target="_blank">文档</a></p><pre><code class="language-bash">pip install graphviz</code></pre><h2>C</h2><p>新建文件test.c</p><pre><code class="language-c">#include &lt;graphviz/gvc.h&gt;
 
 char buf[1024];
 
@@ -112,7 +112,7 @@ int main(int argc, char **argv)
     "-lgvc",
     "-lcgraph",
     "-lcdt"
-],</code></pre><p>这里声明头文件路径<code>D:\\graphviz\\include</code>,静态链接库的路径<code>D:\\graphviz\\lib</code>,以及三个静态链接库的名字</p><p>编译运行后即可得到<code>output.png</code></p><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/out.png" alt="out"></p><h3>GNU/Linux</h3><blockquote>假设使用Ubuntu/Debian系,其他系基本类似</blockquote><p>下载开发版本和包管理pkg-config</p><pre><code class="language-bash">sudo apt install pkg-config graphviz-dev</code></pre><p>此时graphviz头文件的位置为 <code>/usr/include/graphviz</code></p><p>如果是C++ Extension Pack那么已经可以找到graphviz的头文件和代码补全了</p><p>如果是clangd的话类似的加入头文件路径,重启vscode生效</p><pre><code class="language-json">{
+],</code></pre><p>这里声明头文件路径<code>D:\\graphviz\\include</code>,静态链接库的路径<code>D:\\graphviz\\lib</code>,以及三个静态链接库的名字</p><p>编译运行后即可得到<code>output.png</code></p><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/out.png" alt="out"></p><blockquote>Windows下使用agread可能会造成segment fault</blockquote><h3>GNU/Linux</h3><blockquote>假设使用Ubuntu/Debian系,其他系基本类似</blockquote><p>下载开发版本和包管理pkg-config</p><pre><code class="language-bash">sudo apt install pkg-config graphviz-dev</code></pre><p>此时graphviz头文件的位置为 <code>/usr/include/graphviz</code></p><p>如果是C++ Extension Pack那么已经可以找到graphviz的头文件和代码补全了</p><p>如果是clangd的话类似的加入头文件路径,重启vscode生效</p><pre><code class="language-json">{
     "clangd.fallbackFlags": [
         "-I/usr/include/graphviz",
     ],
@@ -143,8 +143,8 @@ LDFLAGS=`pkg-config libgvc --libs`
 
 main: main.c
     $(CC) $^ $(CFLAGS) $(LDFLAGS) -o $@</code></pre></div>
-    <div class="dir-tree"><ul><li><a href="../../md-docs/README" >README</a></li></ul><ul><li><a href="../../快速开始/下载" >快速开始<ul><li><a href="../../快速开始/下载" >下载</a></li></ul><ul><li><a href="../../快速开始/编程环境配置" >编程环境配置</a></li></ul></a></li></ul></div>
+    <div class="dir-tree"><ul><li><a href="../../md-docs/README" >README</a></li></ul><ul><li><a href="../../快速开始/下载" >快速开始<ul><li><a href="../../快速开始/下载" >下载</a></li></ul><ul><li><a href="../../快速开始/编程环境配置" >编程环境配置</a></li></ul><ul><li><a href="../../快速开始/DOT入门尝试" >DOT入门尝试</a></li></ul></a></li></ul></div>
     <div class="zood"><a class="" href="https://github.com/luzhixing12345/zood" target="_blank" >zood</a></div>
-    <script type="text/javascript" src="../../../js/change_mode.js"></script><script>addChangeModeButton("../../../img/sun.png","../../../img/moon.png")</script><script type="text/javascript" src="../../../js/copy_code.js"></script><script>addCodeCopy("../../../img/before_copy.png","../../../img/after_copy.png")</script><script type="text/javascript" src="../../../js/prism.js"></script><script type="text/javascript" src="../../../js/next_front.js"></script><script>addLink("../../快速开始/下载",".","ab")</script><script type="text/javascript" src="../../../js/picture_preview.js"></script><script type="text/javascript" src="../../../js/search.js"></script><script>addSearchBar("{}","../../../img/search.svg","../../../img/enter.svg","Ctrl+K")</script><script type="text/javascript" src="../../../js/check_box.js"></script>
+    <script type="text/javascript" src="../../../js/change_mode.js"></script><script>addChangeModeButton("../../../img/sun.png","../../../img/moon.png")</script><script type="text/javascript" src="../../../js/copy_code.js"></script><script>addCodeCopy("../../../img/before_copy.png","../../../img/after_copy.png")</script><script type="text/javascript" src="../../../js/prism.js"></script><script type="text/javascript" src="../../../js/next_front.js"></script><script>addLink("../../快速开始/下载","../../快速开始/DOT入门尝试","ab")</script><script type="text/javascript" src="../../../js/picture_preview.js"></script><script type="text/javascript" src="../../../js/search.js"></script><script>addSearchBar("{}","../../../img/search.svg","../../../img/enter.svg","Ctrl+K")</script><script type="text/javascript" src="../../../js/check_box.js"></script>
 </body>
 </html>
