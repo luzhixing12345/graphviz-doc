@@ -1,4 +1,5 @@
 graph G {
+
   a -- b
   a -- b[color=red]
   b -- a
