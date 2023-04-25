@@ -52,6 +52,11 @@ Mkfile.old
 dkms.conf
 
 .vscode/
-md-docs
 
 *.png
+
+pdf/
+build/
+examples/example?
+
+docs/

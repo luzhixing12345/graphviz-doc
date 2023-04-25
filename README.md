@@ -1,12 +1,14 @@
 # graphviz-doc
 
-graphviz DOT/python/C API文档
+本仓库为 graphviz C API 中文文档
 
-节点图自动排版算法的分析和实现
+同时也是笔者的学习笔记, 如有不当之处请指正
 
 ## 文档
 
-https://luzhixing12345.github.io/graphviz-doc/
+文档: https://luzhixing12345.github.io/graphviz-doc/
+
+示例代码: [examples/](examples/)
 
 ## 参考
 
