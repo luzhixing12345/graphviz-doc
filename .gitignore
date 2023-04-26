@@ -60,3 +60,4 @@ build/
 examples/example?
 
 docs/
+.clang-format

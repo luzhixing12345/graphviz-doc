@@ -21,4 +21,4 @@ all: $(TARGET)
 	$(CC) $(CFLAGS) $< $(LDFLAGS) -o $@
 
 clean:
-	rm $(TARGET) $(OBJS)
+	rm example?? *.png
