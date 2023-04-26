@@ -1,7 +1,7 @@
 
 > 翻译自: https://graphviz.org/pdf/cgraph.pdf
 
-> 有关 graphviz 的C库API 的使用请参阅 C-API 部分, 这里不会展开描述
+> 有关 graphviz 的C库API 的使用 C-API 部分
 
 # Cgraph-pdf
 
@@ -259,3 +259,124 @@ e = agedge(g,u,v,"e8",FALSE);
 ## Traversals
 
 Cgraph提供了用于迭代图对象的函数。例如，我们可以通过以下方式扫描图（有向或无向）的所有边：
+
+> 函数命名都应该算挺标准的了, 应该不难理解和推测, 见 example8.c
+
+```c
+Agnode_t *agfstnode(Agraph_t * g);
+Agnode_t *agnxtnode(Agraph_t * g, Agnode_t * n);
+
+for (n = agfstnode(g); n; n = agnxtnode(g,n)) {
+    for (e = agfstout(g,n); e; e = agnxtout(g,e)) {
+        /* do something with e */
+    }
+}
+```
+
+对于有向边，"in"和"out"的意义是显而易见的。对于无向图，Cgraph**根据创建边时两个节点的顺序分配方向(tail head)**
+
+但是如果在遍历过程中代码删除了一个边或节点，则对象将不再有效，无法获取下一个对象
+
+```c
+for (e = agfstedge(g,n); e; e = agnxtedge(g,e,n)) {
+    // delete node n/edge e -> error
+}
+```
+
+通常可以通过替换为以下代码处理, 即提前取得下一个节点:
+
+```c
+for (e = agfstedge(g,n); e; e = f) {
+    f = agnxtedge(g,e,n);
+    // delete node n/edge e -> ok
+}
+```
+
+遍历保证按照它们在根图中创建的顺序访问图的节点或节点的边
+
+## External Attributes
+
+图形对象可以具有相关的 `字符串名称-值` 对。当读取图形文件时，Cgraph的解析器会处理这些细节，因此属性可以在文件的任何位置添加。**在C程序中，必须在使用之前声明值。**
+
+Cgraph假定给定类型（图/子图、节点或边）的**所有对象具有相同的属性**, **即属性内部没有子类型的概念**。属性信息存储在数据字典中。每个图形都有三个（用于图/子图、节点和边），在调用这些字典的创建、搜索和遍历时需要使用预定义的常量 `AGRAPH`, `AGNODE` 和 `AGEDGE`
+
+因此，要为节点创建属性，可以使用：
+
+> 见 example9.c
+
+```c
+Agsym_t *sym;
+sym = agattr(g,AGNODE,"shape","box"); // 节点的形状变为正方形
+```
+
+如果成功，sym指向新创建（或更新）属性的描述符。(因此，即使shape先前已声明并具有其他默认值，它也将通过上述方式设置为box)
+通过使用空指针作为值，可以使用相同的函数搜索图形的属性定义。
+
+```c
+sym = agattr(g,AGNODE,"shape",0);
+if (sym) {
+    printf("The default shape is %s.\n",sym->defval);
+}
+```
+
+如果已经有了一个 graph object 的指针 n, 可以直接利用 agattrsym 去获取属性 
+
+```c
+Agnode_t* n;
+Agsym_t* sym = agattrsym(n,"shape");
+if (sym) {
+    printf("The default shape is %s.\n",sym->defval);
+}
+```
+
+> 如果未定义属性，则两个函数均返回NULL
+
+可以使用 agnxtattr 去遍历所有属性：
+
+```c
+sym = 0; /* to get the first one */
+while (sym = agnxtattr(g,AGNODE,sym)) {
+    printf("%s = %s\n",sym->name,sym->defval);
+}
+```
+
+假设某个对象已经存在属性，则可以使用其字符串名称或其Agsym_t描述符获取或设置其值。要使用字符串名称，我们有：
+
+```c
+Agnode_t* n;
+char *str = agget(n,"shape");
+agset(n,"shape","hexagon");
+```
+
+如果属性经常被引用，则使用其描述符作为索引会更快，如下所示：
+
+```c
+Agsym_t *sym = agattr(g,AGNODE,"shape","box");
+char *str = agxget(n,sym);
+agxset(n,sym,"hexagon");
+```
+
+Cgraph提供了两个辅助函数来处理属性。函数agsafeset首先检查属性是否已定义，如果没有定义，则使用默认值def定义它。然后将value用作分配给obj的特定值。
+
+有时有用的是将一个对象的所有值复制到另一个对象中。这可以使用agcopyattr(void *src, void\* tgt)轻松完成。这假定源和目标是相同类型的图形对象，并且src的属性已经为tgt定义。如果src和tgt属于同一根图，则这将自动成立。
+
+> 这里的 API 有点多, 不过大概意思都差不多, 读者可以参考 example9.c 的代码选择合适的方式使用. 关于都有什么属性以及属性都有什么值可选参考 `属性`
+
+## Internal Attributes
+
+只使用字符串属性完全是可能的。然而，通常来说这样做效率太低下了。为了解决这个问题，每个图形对象（图形、节点或边）都可以有一个相关的内部数据记录列表。每个记录的布局是由程序员定义的，除了每个记录都必须有一个 `Agrec_t` 头。这些记录是通过Cgraph分配的。例如：
+
+```c
+typedef struct mynode_s {
+    Agrec_t h;
+    int count;
+} mynode_t;
+mynode_t *data;
+Agnode_t *n;
+n = agnode(g, "mynodename", TRUE);
+data = (mynode_t *)agbindrec(n, "mynode_t", sizeof(mynode_t), FALSE);
+data->count = 1;
+```
+
+类似地，aggetrec会搜索记录，如果记录存在则返回指向该记录的指针，否则返回NULL；agdelrec从对象中删除记录。
+虽然每个图形对象可能有自己独特的记录集合，但为了方便起见，有一些函数可以通过一次性为所有节点、边或子图分配或删除相同的记录来更新整个图形。这些函数包括：
