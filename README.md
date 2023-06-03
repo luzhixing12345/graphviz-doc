@@ -8,7 +8,7 @@
 
 文档: https://luzhixing12345.github.io/graphviz-doc/
 
-示例代码: [examples/](examples/)
+示例代码: [code_examples/](code_examples/)
 
 ## 参考
 

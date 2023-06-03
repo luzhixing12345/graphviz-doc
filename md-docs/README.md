@@ -8,4 +8,4 @@
 
 既然是graphviz的 C API库的使用, 那么默认您已经有了关于 graphviz 和 C 的基本技能
 
-本文关注于如何在C程序中调用 API 实现绘图功能, 本文中所有的例子您可以在 examples/ 下找到
+本文关注于如何在C程序中调用 API 实现绘图功能, 本文中所有的例子您可以在 code_examples/ 下找到
