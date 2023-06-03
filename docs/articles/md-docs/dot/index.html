@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Document
+    </title>
+    <link rel='stylesheet' href=../../../css/prism.css /><link rel='stylesheet' href=../../../css/index.css />
+    <link rel="icon" href="https://raw.githubusercontent.com/learner-lu/picbed/master/logo.png">
+</head>
+
+<body class="light">
+    <div class="header-navigator"><ul><li><a href="#h1-0">dot</a><ul><li><a href="#h2-1">DOT</a></li></ul><ul><li><a href="#h2-2">Xdot</a></li></ul></li></ul></div><div class='markdown-body'><h1 id="h1-0">dot</h1><h2 id="h2-1">DOT</h2><p>DOT是一门用于定义 Graphviz 节点、边、图、子图和簇的抽象语法,它并不是一门编程语言,只是一种graphviz定义的描述型语言</p><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/20230115150650.png" alt=""></p><p>DOT完整的语法描述如上图所示,但是以这种方式入门显然并不合适,在一开始也并不需要掌握及其精细的调控方式</p><p>在本节中我们仅作简单介绍,我们将在下一小节中详细介绍DOT作图</p><p>如上一节中编写的 ast.dot, DOT有如下几个特点</p><ul><li>文件结尾为.dot</li></ul><ul><li>关键字大小写无关</li></ul><ul><li>允许命名ID, ID的命名规范与C比较类似</li></ul><ul><li>与C相同的注释支持(//和/**/) + #</li></ul><ul><li>至少支持ASCII字符集,默认支持uft-8</li></ul><p>如下创建一个有向图,完成简单的图连线</p><pre><code class="language-dot">digraph G {
+  a -&gt; b
+  a -&gt; b
+  b -&gt; a
+  a -&gt; c
+  // 这是一个注释
+}</code></pre><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/20230115152327.png" alt=""></p><p>如下创建一个无向图,并修改一些线的颜色</p><pre><code class="language-dot">graph G {
+  a -- b
+  a -- b[color=red]
+  b -- a
+  a -- c[color=blue]
+}</code></pre><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/20230115152526.png" alt=""></p><p>dot同样支持命令行的输出,可以从文件或stdin接收输入</p><p>将结果保存到output.svg</p><pre><code class="language-bash">echo 'digraph { a -&gt; b }' | dot -Tsvg &gt; output.svg</code></pre><p>输出到终端</p><pre><code class="language-bash">echo 'digraph { a -&gt; b }' | dot -Tsvg -Gfontcolor=red -Glabel="My favorite letters"</code></pre><p>接收文件输入保存到文件</p><pre><code class="language-bash">dot -Tpng ./dot/01.dot -o aaa.png</code></pre><p>其中-T后面为文件格式,graphviz支持包括bmp,gif,jpeg,png,tga在内的<a href="https://graphviz.org/docs/outputs/" target="_blank">众多格式</a></p><p>一种更为便捷的图片生成方式</p><pre><code class="language-bash">dot -Tpng -O ./dot/01.dot</code></pre><p>这种方式会在01.dot同目录下生成一个和01同名的01.png</p><h2 id="h2-2">Xdot</h2><blockquote><p><a href="https://graphviz.org/docs/outputs/canon/#xdot" target="_blank">Xdot文档</a></p></blockquote><p>如下的方式可以在背景中生成一个红色的正方形</p><pre><code class="language-dot">digraph G {
+  _background="c 7 -#ff0000 p 4 4 4 36 4 36 36 4 36";
+  a -&gt; b
+  a -&gt; c
+  a -&gt; d
+}</code></pre><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/20230115193336.png" alt=""></p><p>其中控制_background的属性的就是Xdot节点: "c 7 -#ff0000 p 4 4 4 36 4 36 36 4 36"</p><p>Xdot的参数大概分为如下几种</p><blockquote><p>其中开头的字母为缩写,以及对应的标识符.n为点的数量,x1</p></blockquote><ul><li>填充的多边形: <code>P n x1,y1,...</code></li></ul><ul><li>不填充的多边形: <code>p n x1,y1,...</code></li></ul><ul><li>不闭合的多边形: <code>L n x1,y1,...</code></li></ul><ul><li>填充的椭圆: <code>E x0 y0 w h</code><p>((x-x0)/w)² + ((y-y0)/h)² = 1</p></li></ul><ul><li>不填充的椭圆: <code>e x0 y0 w h</code></li></ul><ul><li>贝塞尔曲线: <code>B n x1,y1,...</code></li></ul><ul><li>填充的贝塞尔曲线: <code>b n x1,y1,...</code></li></ul><p>和设置类属性,这里的n代表几位比特位,例如 C 7 -#ff0000, n=7表示读取 - 后面七位作为颜色</p><ul><li>填充的颜色: <code>C n -b1b2b3</code>(只对启用了填充的图形有效)</li></ul><ul><li>画笔颜色: <code>c n -b1b2b3</code></li></ul><ul><li>字体: <code>F s n -b1b2b3</code><p>字体大小由s确定,字体名字由n比特(b1b2b3)确定</p></li></ul><ul><li>字型: <code>t f</code>, 其中f为整数,其对应表如下</li></ul><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/20230116004104.png" alt=""></p><pre><code class="language-dot">digraph G {
+  _background="c 7 -#ff0000 C 7 -#ff0000 b 4 4 4 36 4 36 36 4 36";
+}</code></pre><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/20230116004325.png" alt=""></p></div>
+    <div class="dir-tree"><ul><li><a href="../../md-docs/README" >README</a></li></ul><ul><li><a href="../../md-docs/快速开始" >快速开始</a></li></ul><ul><li><a href="../../md-docs/dot" >dot</a></li></ul><ul><li><a href="../../md-docs/cgraph-pdf" >cgraph-pdf</a></li></ul><ul><li><a href="../../md-docs/C-API" >C-API</a></li></ul></div>
+    <div class="zood"><a class="" href="https://github.com/luzhixing12345/zood" target="_blank">zood</a></div>
+    <script type="text/javascript" src="../../../js/next_front.js"></script><script>addLink("../../md-docs/快速开始","../../md-docs/cgraph-pdf","ab")</script><script type="text/javascript" src="../../../js/change_mode.js"></script><script>addChangeModeButton("../../../img/sun.png","../../../img/moon.png")</script><script type="text/javascript" src="../../../js/copy_code.js"></script><script>addCodeCopy("../../../img/before_copy.png","../../../img/after_copy.png")</script><script type="text/javascript" src="../../../js/navigator.js"></script><script type="text/javascript" src="../../../js/prism.js"></script><script type="text/javascript" src="../../../js/picture_preview.js"></script><script type="text/javascript" src="../../../js/check_box.js"></script>
+</body>
+
+</html>

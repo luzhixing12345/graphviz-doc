@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Document
+    </title>
+    <link rel='stylesheet' href=../../../css/prism.css /><link rel='stylesheet' href=../../../css/index.css />
+    <link rel="icon" href="https://raw.githubusercontent.com/learner-lu/picbed/master/logo.png">
+</head>
+
+<body class="light">
+    <div class="header-navigator"><ul><li><a href="#h1-0">快速开始</a><ul><li><a href="#h2-1">Vscode</a></li></ul></li></ul></div><div class='markdown-body'><h1 id="h1-0">快速开始</h1><p>对于源码可以在 <a href="https://graphviz.org/download/source/" target="_blank">此处</a> 找到</p><pre><code class="language-bash">./configure --prefix=&lt;path/to/install&gt;
+make
+make install</code></pre><p>对于基本使用来说直接 apt 下载即可</p><pre><code class="language-bash">sudo apt install graphviz</code></pre><p>但对于开发来说我们需要其 include/ 头文件和 lib/ 静态库, 您可从源码编译得到</p><pre><code class="language-bash">build/
+├── bin
+├── include
+├── lib
+└── share</code></pre><p>或者直接安装graphviz开发版本</p><pre><code class="language-bash">sudo apt install graphviz-dev</code></pre><p>安装后 graphviz头文件的位置为 <code>/usr/include/graphviz</code>, 静态库安装在 <code>/lib/x86_64-linux-gnu/</code>, 静态库名分别是 <code>gvc</code> <code>cgraph</code> <code>cdt</code></p><p>笔者个人习惯是使用 pkg-config 来管理第三方库</p><pre><code class="language-bash">sudo apt install pkg-config</code></pre><p>得到如下的 Makefile 用于自动化编译</p><pre><code class="language-c">#include &lt;graphviz/cgraph.h&gt;
+#include &lt;graphviz/gvc.h&gt;
+
+int main() {
+    return 0;
+}</code></pre><pre><code class="language-Makefile">CFLAGS=`pkg-config libgvc --cflags` -Wall -g -O2
+# -I/usr/include/graphviz
+
+LDFLAGS=`pkg-config libgvc --libs`
+# -lgvc -lcgraph -lcdt
+
+main: main.c
+    $(CC) $^ $(CFLAGS) $(LDFLAGS) -o $@</code></pre><p>Windows 下配置路径同理类似, 不再赘述.</p><p>后面的代码默认都运行在 Linux 系统中, 笔者运行环境为 WSL2(Ubuntu22.04)</p><h2 id="h2-1">Vscode</h2><p>首先在vscode插件市场搜索graphviz并且下载两个插件</p><p>其中language support提供dot语言的高亮显示,preview可以提供预览</p><p>安装完成之后可以看到ast.dot文件完成了部分语法高亮,并且可以在右上角预览graphviz渲染之后的效果(ctrl+k v)</p><p>除此之外还可以使用graphviz官方提供的在线编辑网站 <a href="http://magjac.com/graphviz-visual-editor/" target="_blank">http://magjac.com/graphviz-visual-editor/</a> 实时预览</p><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/20230115150156.png" alt=""></p></div>
+    <div class="dir-tree"><ul><li><a href="../../md-docs/README" >README</a></li></ul><ul><li><a href="../../md-docs/快速开始" >快速开始</a></li></ul><ul><li><a href="../../md-docs/dot" >dot</a></li></ul><ul><li><a href="../../md-docs/cgraph-pdf" >cgraph-pdf</a></li></ul><ul><li><a href="../../md-docs/C-API" >C-API</a></li></ul></div>
+    <div class="zood"><a class="" href="https://github.com/luzhixing12345/zood" target="_blank">zood</a></div>
+    <script type="text/javascript" src="../../../js/next_front.js"></script><script>addLink("../../md-docs/README","../../md-docs/dot","ab")</script><script type="text/javascript" src="../../../js/change_mode.js"></script><script>addChangeModeButton("../../../img/sun.png","../../../img/moon.png")</script><script type="text/javascript" src="../../../js/copy_code.js"></script><script>addCodeCopy("../../../img/before_copy.png","../../../img/after_copy.png")</script><script type="text/javascript" src="../../../js/navigator.js"></script><script type="text/javascript" src="../../../js/prism.js"></script><script type="text/javascript" src="../../../js/picture_preview.js"></script><script type="text/javascript" src="../../../js/check_box.js"></script>
+</body>
+
+</html>
