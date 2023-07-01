@@ -57,6 +57,11 @@ dkms.conf
 
 pdf/
 build/
-code_examples/example?
 
-.clang-format
+examples/dot_examples/graphs
+examples/dot_examples/gvpr
+examples/c_examples/*
+!examples/c_examples/*.c
+!examples/c_examples/*.dot
+!examples/c_examples/*.png
+!examples/c_examples/Makefile

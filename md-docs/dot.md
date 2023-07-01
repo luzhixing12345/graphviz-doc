@@ -1,14 +1,7 @@
 
 # dot
 
-
-## DOT
-
-DOT是一门用于定义 Graphviz 节点、边、图、子图和簇的抽象语法,它并不是一门编程语言,只是一种graphviz定义的描述型语言
-
-![](https://raw.githubusercontent.com/learner-lu/picbed/master/20230115150650.png)
-
-DOT完整的语法描述如上图所示,但是以这种方式入门显然并不合适,在一开始也并不需要掌握及其精细的调控方式
+DOT是一门用于定义 Graphviz 节点、边、图、子图和簇的抽象语法,它并不是一门编程语言,只是一种graphviz定义的描述型语言, [graphviz lang](https://graphviz.org/doc/info/lang.html) 给出了DOT的完整BNF表示, 但是以这种方式入门显然并不合适,在一开始也并不需要掌握及其精细的调控方式
 
 在本节中我们仅作简单介绍,我们将在下一小节中详细介绍DOT作图
 
@@ -23,6 +16,7 @@ DOT完整的语法描述如上图所示,但是以这种方式入门显然并不�
 如下创建一个有向图,完成简单的图连线
 
 ```dot
+// 1.gv
 digraph G {
   a -> b
   a -> b
@@ -37,6 +31,7 @@ digraph G {
 如下创建一个无向图,并修改一些线的颜色
 
 ```dot
+// 2.gv
 graph G {
   a -- b
   a -- b[color=red]

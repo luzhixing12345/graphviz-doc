@@ -1,10 +1,10 @@
 # graphviz-doc
 
-本仓库为 graphviz C API 中文文档
+本仓库为 graphviz 中文文档
 
 ## 文档
 
-文档: https://luzhixing12345.github.io/graphviz-doc/
+文档: [graphviz-doc document](https://luzhixing12345.github.io/graphviz-doc/)
 
 示例代码: [code_examples/](code_examples/)
 

@@ -13,7 +13,8 @@
 </head>
 
 <body class="light">
-    <div class="header-navigator"><ul><li><a href="#h1-0">dot</a><ul><li><a href="#h2-1">DOT</a></li></ul><ul><li><a href="#h2-2">Xdot</a></li></ul></li></ul></div><div class='markdown-body'><h1 id="h1-0">dot</h1><h2 id="h2-1">DOT</h2><p>DOT是一门用于定义 Graphviz 节点、边、图、子图和簇的抽象语法,它并不是一门编程语言,只是一种graphviz定义的描述型语言</p><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/20230115150650.png" alt=""></p><p>DOT完整的语法描述如上图所示,但是以这种方式入门显然并不合适,在一开始也并不需要掌握及其精细的调控方式</p><p>在本节中我们仅作简单介绍,我们将在下一小节中详细介绍DOT作图</p><p>如上一节中编写的 ast.dot, DOT有如下几个特点</p><ul><li>文件结尾为.dot</li></ul><ul><li>关键字大小写无关</li></ul><ul><li>允许命名ID, ID的命名规范与C比较类似</li></ul><ul><li>与C相同的注释支持(//和/**/) + #</li></ul><ul><li>至少支持ASCII字符集,默认支持uft-8</li></ul><p>如下创建一个有向图,完成简单的图连线</p><pre><code class="language-dot">digraph G {
+    <div class="header-navigator"><ul><li><a href="#h1-0">dot</a><ul><li><a href="#h2-1">Xdot</a></li></ul></li></ul></div><div class='markdown-body'><h1 id="h1-0">dot</h1><p>DOT是一门用于定义 Graphviz 节点、边、图、子图和簇的抽象语法,它并不是一门编程语言,只是一种graphviz定义的描述型语言, <a href="https://graphviz.org/doc/info/lang.html" target="_blank">graphviz lang</a> 给出了DOT的完整BNF表示, 但是以这种方式入门显然并不合适,在一开始也并不需要掌握及其精细的调控方式</p><p>在本节中我们仅作简单介绍,我们将在下一小节中详细介绍DOT作图</p><p>如上一节中编写的 ast.dot, DOT有如下几个特点</p><ul><li>文件结尾为.dot</li></ul><ul><li>关键字大小写无关</li></ul><ul><li>允许命名ID, ID的命名规范与C比较类似</li></ul><ul><li>与C相同的注释支持(//和/**/) + #</li></ul><ul><li>至少支持ASCII字符集,默认支持uft-8</li></ul><p>如下创建一个有向图,完成简单的图连线</p><pre><code class="language-dot">// 1.gv
+digraph G {
   a -&gt; b
   a -&gt; b
   b -&gt; a
@@ -24,7 +25,7 @@
   a -- b[color=red]
   b -- a
   a -- c[color=blue]
-}</code></pre><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/20230115152526.png" alt=""></p><p>dot同样支持命令行的输出,可以从文件或stdin接收输入</p><p>将结果保存到output.svg</p><pre><code class="language-bash">echo 'digraph { a -&gt; b }' | dot -Tsvg &gt; output.svg</code></pre><p>输出到终端</p><pre><code class="language-bash">echo 'digraph { a -&gt; b }' | dot -Tsvg -Gfontcolor=red -Glabel="My favorite letters"</code></pre><p>接收文件输入保存到文件</p><pre><code class="language-bash">dot -Tpng ./dot/01.dot -o aaa.png</code></pre><p>其中-T后面为文件格式,graphviz支持包括bmp,gif,jpeg,png,tga在内的<a href="https://graphviz.org/docs/outputs/" target="_blank">众多格式</a></p><p>一种更为便捷的图片生成方式</p><pre><code class="language-bash">dot -Tpng -O ./dot/01.dot</code></pre><p>这种方式会在01.dot同目录下生成一个和01同名的01.png</p><h2 id="h2-2">Xdot</h2><blockquote><p><a href="https://graphviz.org/docs/outputs/canon/#xdot" target="_blank">Xdot文档</a></p></blockquote><p>如下的方式可以在背景中生成一个红色的正方形</p><pre><code class="language-dot">digraph G {
+}</code></pre><p><img src="https://raw.githubusercontent.com/learner-lu/picbed/master/20230115152526.png" alt=""></p><p>dot同样支持命令行的输出,可以从文件或stdin接收输入</p><p>将结果保存到output.svg</p><pre><code class="language-bash">echo 'digraph { a -&gt; b }' | dot -Tsvg &gt; output.svg</code></pre><p>输出到终端</p><pre><code class="language-bash">echo 'digraph { a -&gt; b }' | dot -Tsvg -Gfontcolor=red -Glabel="My favorite letters"</code></pre><p>接收文件输入保存到文件</p><pre><code class="language-bash">dot -Tpng ./dot/01.dot -o aaa.png</code></pre><p>其中-T后面为文件格式,graphviz支持包括bmp,gif,jpeg,png,tga在内的<a href="https://graphviz.org/docs/outputs/" target="_blank">众多格式</a></p><p>一种更为便捷的图片生成方式</p><pre><code class="language-bash">dot -Tpng -O ./dot/01.dot</code></pre><p>这种方式会在01.dot同目录下生成一个和01同名的01.png</p><h2 id="h2-1">Xdot</h2><blockquote><p><a href="https://graphviz.org/docs/outputs/canon/#xdot" target="_blank">Xdot文档</a></p></blockquote><p>如下的方式可以在背景中生成一个红色的正方形</p><pre><code class="language-dot">digraph G {
   _background="c 7 -#ff0000 p 4 4 4 36 4 36 36 4 36";
   a -&gt; b
   a -&gt; c
