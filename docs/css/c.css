@@ -6,15 +6,15 @@ pre[class*="language-c"] .Token {
     color: #C1CCCC;
 }
 
-pre[class*="language-c"] .Token.brace-depth-0 {
+pre[class*="language-c"] .Token.BraceDepth-0 {
     color: #FFD700;
 }
 
-pre[class*="language-c"] .Token.brace-depth-1 {
+pre[class*="language-c"] .Token.BraceDepth-1 {
     color: #DA70D6;
 }
 
-pre[class*="language-c"] .Token.brace-depth-2 {
+pre[class*="language-c"] .Token.BraceDepth-2 {
     color: #1A9DFF;
 }
 
@@ -40,8 +40,13 @@ pre[class*="language-c"] .Token.VOLATITLE,
 pre[class*="language-c"] .Token.RESTRICT,
 pre[class*="language-c"] .Token._ATOMIC,
 pre[class*="language-c"] .Token._STATIC_ASSERT,
-pre[class*="language-c"] .Token._GENERIC {
+pre[class*="language-c"] .Token._GENERIC,
+pre[class*="language-c"] .Token.GNU_C_Assembly {
     color: #569cd6;
+}
+
+pre[class*="language-c"] .Token.GNU_C_Assembly._ATTRIBUTE {
+    color: #DCDCAA;
 }
 
 pre[class*="language-c"] .Token.ID {
@@ -82,6 +87,7 @@ pre[class*="language-c"] .Token.IF,
 pre[class*="language-c"] .Token.ELSE,
 pre[class*="language-c"] .Token.FOR,
 pre[class*="language-c"] .Token.WHILE,
+pre[class*="language-c"] .Token.DO,
 pre[class*="language-c"] .Token.SWITCH,
 pre[class*="language-c"] .Token.CASE,
 pre[class*="language-c"] .Token.DEFAULT {
@@ -101,8 +107,11 @@ pre[class*="language-c"] .Token.HeaderName {
 }
 
 pre[class*="language-c"] .Token.StorageType,
+pre[class*="language-c"] .Token.FunctionType,
 pre[class*="language-c"] .Token.QualifyType,
 pre[class*="language-c"] .Token.StructureType,
+pre[class*="language-c"] .Token.STRUCT,
+pre[class*="language-c"] .Token.UNION,
 pre[class*="language-c"] .Token.EnumSpecifier {
     color: #569cd6;
 }
@@ -147,7 +156,11 @@ pre[class*="language-c"] .Token.Control {
     color: #D7BA6E;
 }
 
-pre[class*="language-c"] .Token.COMMA, pre[class*="language-c"] .Token.COLON, pre[class*="language-c"] .Token.DOT, pre[class*="language-c"] .Token.SEMI, pre[class*="language-c"] .Token.GotoLabel {
+pre[class*="language-c"] .Token.COMMA,
+pre[class*="language-c"] .Token.COLON,
+pre[class*="language-c"] .Token.DOT,
+pre[class*="language-c"] .Token.SEMI,
+pre[class*="language-c"] .Token.GotoLabel {
     color: #C1CCCC;
 }
 

@@ -8,7 +8,7 @@
 
 本文主要介绍三部分内容
 
-- graphviz 的绘图属性
+- graphviz 的 DOT 绘图属性
 
   文中所有的例子可以在 examples/dot_examples/ 下找到
 
@@ -19,3 +19,11 @@
 - graphviz python API
 
   文中所有的例子可以在 examples/py_examples/ 下找到
+
+## 其他参考链接
+
+- [graphviz 官网](https://graphviz.org/)
+- 在线绘图查看:
+  - [webgraphviz](http://www.webgraphviz.com/)
+  - [github dreampuf](http://dreampuf.github.io/GraphvizOnline)
+  - [magjac graphviz-visual-editor](http://magjac.com/graphviz-visual-editor/)
